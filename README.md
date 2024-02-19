@@ -1,93 +1,175 @@
-# Frontend Mentor - Social links profile
+# Frontend Mentor - Social links profile solution
 
-![Design preview for the Social links profile coding challenge](./design/desktop-preview.jpg)
+This is a solution to the [Social links profile challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/social-links-profile-UG32l9m6dQ). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-## Welcome! 👋
+## Table of contents
 
-Thanks for checking out this front-end coding challenge.
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+## Overview
 
-**To do this challenge, you need a basic understanding of HTML and CSS.**
+### The challenge
 
-## The challenge
-
-Your challenge is to build out this social links profile and get it looking as close to the design as possible.
-
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
-
-Your users should be able to: 
+Users should be able to:
 
 - See hover and focus states for all interactive elements on the page
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+### Screenshot
 
-## Where to find everything
+Here is the mobile view:
+![](./docs/mobile.png)
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design. 
+Here is the desktop view:
+![](./docs/desktop.png)
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`. 
+### Links
 
-If you would like the design files (we provide Sketch & Figma versions) to inspect the design in more detail, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+- Solution URL: [https://github.com/DonHeidi/social-links-profile](https://github.com/DonHeidi/social-links-profile)
+- Live Site URL: [https://donheidi.github.io/social-links-profile/](https://donheidi.github.io/social-links-profile/)
 
-All the required assets for this project are in the `/assets` folder. The images are already exported for the correct screen size and optimized.
+## My process
 
-We also include variable and static font files for the required fonts for this project. You can choose to either link to Google Fonts or use the local font files to host the fonts yourself. Note that we've removed the static font files for the font weights that aren't needed for this project.
+Straight forward. I laid out the structure of the content and then replaced the links with web components. I used a JSON file to load the data for the social links.
+The last step was to add the styling and refine the responsive behaviour.
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+### Built with
 
-## Building your project
+- Semantic HTML5 markup
+- Web Components
+- Flexbox
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+### What I learned
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+I focused on learning Web Components. I have built two components: a social link and a section of social links.
 
-## Deploying your project
+Here is the code for the social link component:
 
-As mentioned above, there are many ways to host your project for free. Our recommend hosts are:
+```javascript
+// creating the template for the social link and adding the styles. The slot is used to pass the content from the markup file to the component
+const linkListItemTemplate = document.createElement('template')
+linkListItemTemplate.innerHTML = `
+  <style>
+    a, a:visited, a:link, a:active {
+      display: block;
+      background-color: ${grey};
+      width: 100%;
+      padding-block: 1.25rem;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      color: ${white};
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.5;
+      border-radius: 0.5rem;
+    }
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+    a:hover {
+      color: ${grey};
+      background-color: ${neonGreen};
+    }
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
+    li {
+      list-style: none;
+      width: 100%;
+      display: block;
+    }
 
-## Create a custom `README.md`
+  </style>
+  <li><a><slot></slot></a></li>
+`
+// creating the class for the social link
+class LinkListItem extends HTMLElement {
+  // these are the attributes that can be set on the social link
+  static get observedAttributes() {
+    return ['href', 'alt']
+  }
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
+  // constructor to create the shadow DOM and to append the template to it. The href and alt attributes are set here, too.
+  constructor() {
+    super()
+    const shadow = this.attachShadow({ mode: 'open' })
+    shadow.appendChild(linkListItemTemplate.content.cloneNode(true))
+    shadow.querySelector('a').href = this.getAttribute('href')
+    shadow.querySelector('a').alt = this.getAttribute('alt')
+  }
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+  // listen for changes to the attributes
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case 'href':
+        this.shadowRoot.querySelector('a').href = newValue
+        break
+      case 'alt':
+        this.shadowRoot.querySelector('a').alt = newValue
+        break
+    }
+  }
+}
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+// Define the template, so it can be used in the markup file
+customElements.define('link-list-item', LinkListItem)
+```
 
-## Submitting your solution
+I decided to dynamically load the social links from a JSON file. Thats, why I am mapping over the JSON file and creating a social link for each entry.
+As an alternative, I could have used the solial link in the html.
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
+This snippet fetched the data and creates a profile-section element that is a container for the social links. The profile-section element is a web component, too.
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
+I am not using the title currently in the template of the profile-section but I could use it in the future. the attribute slot is defining, which slot in the template should be used.
 
-## Sharing your solution
+The social links are created as link-list-item elements and are appended to the profile-section element.
 
-There are multiple places you can share your solution:
+```javascript
+fetch('assets/profile.json')
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data)
+    data.forEach((profile) => {
+      const profileSection = document.createElement('profile-section')
+      profileSection.innerHTML = `<h2 slot="title">${profile.displayName}</h2>`
 
-1. Share your solution page in the **#finished-projects** channel of our [community](https://www.frontendmentor.io/community). 
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
+      const links = profile.links.map((link) => {
+        return `<link-list-item slot="item" href="${link.url}" alt="${link.displayName}">${link.displayName}</link-list-item>`
+      })
 
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
+      profileSection.innerHTML += links.join('')
+      profiles.appendChild(profileSection)
+    })
+  })
+  .catch((error) => {
+    console.error('Error:', error)
+  })
+```
 
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
+### Continued development
 
-## Got feedback for us?
+I plan to use this component with my personal design system and to use it in my personal website.
 
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
+Web components feel very inconvenient to use. In my opinion, tools like React or Vue offer better ways to build reusable components.
 
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
+### Useful resources
 
-**Have fun building!** 🚀
+- [About web components](https://developer.mozilla.org/en-US/docs/Web/API/Web_Components) - I have used this as my reference to understand Web Components.
+- [Tutorial by Web Dev Simplified](https://www.youtube.com/watch?v=2I7uX8m0Ta0&t=456s) - This got me started really fast.
+
+## Author
+
+- Website - [Sebastian Heitmann](https://donheidi.github.io/social-links-profile/)
+- Frontend Mentor - [@DonHeidi](https://www.frontendmentor.io/profile/DonHeidi)
+- Twitter - [@e2e_developer](https://www.twitter.com/e2e_developer)
+- LinkedIn - [Sebastian Heitmann](https://www.linkedin.com/in/sebastian-heitmann/)
+
+## Acknowledgments
+
+Shout out to Kyle from Web Dev Simplified for his great tutorial on Web Components. It helped me a lot to understand the concept and to build my first Web Component.
