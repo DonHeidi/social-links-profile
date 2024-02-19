@@ -1,0 +1,39 @@
+[
+  {
+    "section": "social",
+    "displayName": "Social Media",
+    "links": [
+      {
+        "name": "linkedin",
+        "displayName": "LinkedIn",
+        "url": "https://www.linkedin.com/in/sebastian-heitmann/"
+      },
+      {
+        "name": "x",
+        "displayName": "X / Twitter",
+        "url": "https://twitter.com/e2e_developer"
+      }
+    ]
+  },
+  {
+    "section": "coding",
+    "displayName": "Software Development",
+    "links": [
+      {
+        "name": "github",
+        "displayName": "GitHub",
+        "url": "https://github.com/DonHeidi"
+      },
+      {
+        "name": "frontendmentor",
+        "displayName": "Frontend Mentor",
+        "url": "https://www.frontendmentor.io/profile/DonHeidi"
+      },
+      {
+        "name": "codepen",
+        "displayName": "CodePen",
+        "url": "https://codepen.io/DonHeidi"
+      }
+    ]
+  }
+]
