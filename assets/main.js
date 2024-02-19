@@ -113,7 +113,7 @@ customElements.define('link-list-item', LinkListItem)
 
 const profiles = document.createElement('div')
 
-fetch('/assets/profile.json')
+fetch('assets/profile.json')
   .then((response) => response.json())
   .then((data) => {
     console.log(data)
