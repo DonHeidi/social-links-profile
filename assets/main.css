@@ -87,15 +87,6 @@ h6 {
   font-weight: 600;
 }
 
-body {
-  font-family: 'Inter';
-  background-color: var(--clr-black);
-  height: 100dvh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 h1 {
   all: unset;
 }
@@ -122,12 +113,48 @@ p {
   padding: 2.5rem;
   opacity: 0;
   transition: opacity 0.3s ease;
-  min-width: 384px;
   border-radius: 1.25rem;
 
   &.container--loaded {
     opacity: 1;
   }
+}
+
+body {
+  font-family: 'Inter';
+  background-color: var(--clr-black);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+@media screen and (min-height: 725px) {
+  body {
+    align-items: center;
+    height: 100vh;
+    height: 100dvh;
+  }
+}
+
+@media screen and (orientation: portrait) and (max-width: 376px) {
+  body {
+    align-items: flex-start;
+  }
+
+  body {
+    padding: 1.5rem;
+  }
+
+  .container {
+    padding: 1.5rem;
+
+    min-width: 0;
+  }
+}
+
+.profile__overview {
+  width: 100%;
 }
 
 .white {

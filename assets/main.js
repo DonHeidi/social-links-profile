@@ -12,7 +12,7 @@ sectionTemplate.innerHTML = `
     }
 
     section {
-      min-width: 304px;
+      width: 100%;
       margin-bottom: 1em;
     }
 
@@ -56,10 +56,9 @@ linkListItemTemplate.innerHTML = `
     a, a:visited, a:link, a:active {
       display: block;
       background-color: ${grey};
+      width: 100%;
       padding-block: 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      text-align: center;
       text-decoration: none;
       transition: background-color 0.3s;
       color: ${white};
@@ -76,8 +75,8 @@ linkListItemTemplate.innerHTML = `
 
     li {
       list-style: none;
-      margin: 0;
-      padding: 0;
+      width: 100%;
+      display: block;
     }
 
   </style>
