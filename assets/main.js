@@ -16,10 +16,6 @@ sectionTemplate.innerHTML = `
       margin-bottom: 1em;
     }
 
-    section:not(:last-child) {
-      border-bottom: 1px solid #f4f4f4;
-    }
-
     ul {
       padding: 0;
       margin: 0;
